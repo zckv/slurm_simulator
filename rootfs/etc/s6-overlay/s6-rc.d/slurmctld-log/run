@@ -1,0 +1,2 @@
+#!/bin/sh
+exec s6-log n20 s1000000 T /var/log/slurm/slurmctld

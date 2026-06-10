@@ -1,0 +1,14 @@
+#!/command/with-contenv sh
+set -eu
+
+exec 2>&1
+until [ -S /run/munge/munge.socket.2 ]; do
+    sleep 1
+done
+
+until sacctmgr -n list cluster >/dev/null 2>&1; do
+    echo "[slurmctld.run]: slurmdbd not ready"
+    sleep 1
+done
+
+exec /usr/sbin/slurmctld -D -vv -f /etc/slurm/slurm.conf

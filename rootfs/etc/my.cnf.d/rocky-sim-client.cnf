@@ -1,0 +1,2 @@
+[client]
+socket=/run/mariadb/mariadb.sock
