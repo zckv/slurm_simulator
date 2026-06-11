@@ -1,0 +1,8 @@
+#!/command/with-contenv sh
+set -eu
+
+until [ -S /run/munge/munge.socket.2 ]; do
+    sleep 1
+done
+
+exec /usr/sbin/slurmd -D -vv

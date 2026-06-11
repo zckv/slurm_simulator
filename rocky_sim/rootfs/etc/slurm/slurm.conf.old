@@ -1,0 +1,35 @@
+ClusterName=simulator
+SlurmctldHost=slurm-simulator
+FrontendName=slurm-simulator
+MpiDefault=none
+ProctrackType=proctrack/linuxproc
+ReturnToService=1
+SlurmctldPidFile=/var/run/slurmctld.pid
+SlurmctldPort=6817
+SlurmdPidFile=/var/run/slurmd.pid
+SlurmdPort=6818
+SlurmdSpoolDir=/var/spool/slurmd
+SlurmUser=root
+StateSaveLocation=/var/spool/slurmctld
+SwitchType=switch/none
+TaskPlugin=task/none
+InactiveLimit=0
+KillWait=30
+MinJobAge=300
+SlurmctldTimeout=120
+SlurmdTimeout=300
+Waittime=0
+SchedulerType=sched/backfill
+SelectType=select/cons_tres
+SelectTypeParameters=CR_Core
+AccountingStorageType=accounting_storage/slurmdbd
+JobCompType=jobcomp/none
+JobAcctGatherFrequency=30
+JobAcctGatherType=jobacct_gather/none
+SlurmctldDebug=info
+SlurmctldLogFile=/var/log/slurmctld.log
+SlurmdDebug=info
+SlurmdLogFile=/var/log/slurmd.log
+SlurmdParameters=config_overrides
+include /etc/slurm/nodes.conf
+include /etc/slurm/partitions.conf
