@@ -1,20 +1,21 @@
 #!/command/with-contenv sh
 set -eu
 
+exec 2>&1
 until [ -S /run/munge/munge.socket.2 ]; do
-    echo "[slurmdbd.run]: sock /run/munge/munge.socket.2 not ready" >&2
+    echo "[slurmdbd.run]: sock /run/munge/munge.socket.2 not ready"
     sleep 1
 done
 
 until [ -S /run/mariadb/mariadb.sock ]; do
-    echo "[slurmdbd.run]: sock /run/mariadb/mariadb.sock not ready" >&2
+    echo "[slurmdbd.run]: sock /run/mariadb/mariadb.sock not ready"
     sleep 1
 done
 
 export MYSQL_UNIX_PORT=/run/mariadb/mariadb.sock
 
 if ! mariadb -uroot -e "SELECT 1 FROM mysql.user LIMIT 1" >/dev/null 2>&1; then
-    echo "[slurmdbd.run]: mariadb not ready" >&2
+    echo "[slurmdbd.run]: mariadb not ready"
     exit 1
 fi
 

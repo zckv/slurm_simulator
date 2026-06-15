@@ -3,8 +3,8 @@
 ## Build and validation
 
 - Build the active image: `docker build -t slurm-rocky-sim ./rocky_sim`
-- Run the container with the official Slurm packages and the `s6-overlay` entrypoint from `rocky_sim/Dockerfile`.
-- The container bootstrap lives in `rocky_sim/rootfs/etc/cont-init.d/`, and long-lived daemons live in `rocky_sim/rootfs/etc/services.d/`.
+- Run the container with hostname `slurm-simulator`: `docker run --rm -h "slurm-simulator" slurm-rocky-sim`
+- The container bootstrap lives in `rocky_sim/rootfs/etc/cont-init.d/`, and long-lived daemons live in `rocky_sim/rootfs/etc/s6-overlay/s6-rc.d/`.
 
 ## Architecture
 

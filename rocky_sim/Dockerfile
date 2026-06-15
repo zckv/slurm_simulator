@@ -1,6 +1,6 @@
 FROM rockylinux:9
 
-ARG S6_OVERLAY_VERSION=3.2.1.0
+ARG S6_OVERLAY_VERSION=3.2.3.0
 
 RUN dnf -y install epel-release && \
     dnf -y install tar xz slurm slurm-slurmctld slurm-slurmd slurm-slurmdbd mariadb-server munge && \
@@ -20,4 +20,4 @@ COPY rootfs/ /
 RUN find /etc/s6-overlay/s6-rc.d -type f \( -name run -o -name finish \) -exec chmod +x {} + && \
     chmod +x /etc/cont-init.d/*.sh
 
-CMD ["/init"]
+ENTRYPOINT ["/init"]
