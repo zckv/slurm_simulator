@@ -37,6 +37,6 @@ nodes.
 ## Local build and run
 
 ```bash
-docker build -t slurm-rocky-sim .
-docker run --rm slurm-rocky-sim
+docker build -t slurm-small-sim .
+docker run --rm slurm-small-sim
 ```
