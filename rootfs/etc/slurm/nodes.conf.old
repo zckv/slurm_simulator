@@ -1,1 +1,0 @@
-NodeName=node[001-10]      RealMemory=248000    Sockets=2  CoresPerSocket=32  ThreadsPerCore=1 State=UNKNOWN NodeAddr=slurm-simulator NodeHostName=slurm-simulator

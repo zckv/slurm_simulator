@@ -14,7 +14,8 @@ enough for CI/CD and local testing.
   and Slurm configuration.
 - `rootfs/etc/s6-overlay/s6-rc.d/` defines the supervised services and their
   log pipelines.
-- `rootfs/etc/slurm/*.conf` contains the static Slurm configuration files.
+- `rootfs/etc/slurm/*.conf` contains the Slurm configuration templates that are
+rewritten at startup.
 - `rootfs/etc/my.cnf.d/` contains the MariaDB client/server socket settings.
 
 ## Services
@@ -22,13 +23,20 @@ enough for CI/CD and local testing.
 s6-overlay supervises `mariadb`, `munged`, `slurmctld`, `slurmd`, and
 `slurmdbd` in the same container.
 
-Slurm authentication uses `/run/munge/munge.socket.2`, and the container runs
-with host name `slurm-simulator` so the configured controller host resolves
-correctly.
+Slurm authentication uses `/run/munge/munge.socket.2`, and
+`cont-init.d/10-slurm-config.sh` rewrites `slurm.conf`, `nodes.conf`, and
+`partitions.conf` from the hostname defined at launch.
+
+By default the image simulates about ten nodes and exposes a `debug`
+partition plus a `long` partition, so you can exercise partition creation
+without starting ten `slurmd` instances.
+
+Set `SLURM_SIM_NODE_COUNT` if you want to change the number of simulated
+nodes.
 
 ## Local build and run
 
 ```bash
 docker build -t slurm-rocky-sim .
-docker run --rm -h "slurm-simulator" slurm-rocky-sim
+docker run --rm slurm-rocky-sim
 ```

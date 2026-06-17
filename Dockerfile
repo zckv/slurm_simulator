@@ -17,7 +17,4 @@ RUN curl -fsSL -o /tmp/s6-overlay-noarch.tar.xz \
 
 COPY rootfs/ /
 
-RUN find /etc/s6-overlay/s6-rc.d -type f \( -name run -o -name finish \) -exec chmod +x {} + && \
-    chmod +x /etc/cont-init.d/*.sh
-
 ENTRYPOINT ["/init"]
