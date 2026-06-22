@@ -33,6 +33,5 @@ FROM rockylinux:9
 COPY --from=0 / /
 COPY rootfs/ /
 
-RUN mkdir -p /var/log/munge /var/log/slurm/slurmctld /var/log/slurm/slurmd /var/log/slurm/slurmdbd /var/log/mariadb /run/munge /run/slurm /run/slurmdbd /run/mariadb /var/lib/mysql /var/spool/slurmctld /var/spool/slurmd /etc/cont-init.d /etc/my.cnf.d /etc/s6-overlay/s6-rc.d/user/contents.d
-
+RUN mkdir -p /var/log/slurm/slurmctld /var/log/slurm/slurmd /var/log/slurm/slurmdbd /var/log/mariadb /run/slurm /run/slurmdbd /run/mariadb /var/lib/mysql /var/spool/slurmctld /var/spool/slurmd 
 ENTRYPOINT ["/init"]
