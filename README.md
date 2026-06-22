@@ -34,6 +34,9 @@ without starting ten `slurmd` instances.
 Set `SLURM_SIM_NODE_COUNT` if you want to change the number of simulated
 nodes.
 
+Set `MUNGE_KEY_BASE64` with a base64-encoded munge key to provide your own 
+authentication key. If not set, a new key will be generated automatically at startup.
+
 ## Local build and run
 
 ```bash
