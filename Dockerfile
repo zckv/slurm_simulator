@@ -33,5 +33,4 @@ FROM rockylinux:9
 COPY --from=0 / /
 COPY rootfs/ /
 
-RUN mkdir -p /var/log/slurm/slurmctld /var/log/slurm/slurmd /var/log/slurm/slurmdbd /var/log/mariadb /run/slurm /run/slurmdbd /run/mariadb /var/lib/mysql /var/spool/slurmctld /var/spool/slurmd 
 ENTRYPOINT ["/init"]
