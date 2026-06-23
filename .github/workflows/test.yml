@@ -26,7 +26,12 @@ jobs:
       - name: Setup Munge
         run: |
           mkdir -p /etc/munge
-          sudo base64 -d tests/munge.key.base64 > /etc/munge/munge.key
+          base64 -d tests/munge.key.base64 > munge.key
+          ls -la /etc/munge
+          echo ""
+          sudo cp munge.key /etc/munge/munge.key
+          ls -la /etc/munge
+          echo ""
           sudo chmod 400 /etc/munge/munge.key          
           sudo chown munge: /etc/munge/munge.key
           munged -vv
