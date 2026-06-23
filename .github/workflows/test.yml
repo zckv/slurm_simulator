@@ -31,7 +31,7 @@ jobs:
           echo ""
           sudo cp munge.key /etc/munge/munge.key
           sudo chmod 400 /etc/munge/munge.key          
-          sudo chown root:root /etc/munge/ /var/log/munge /var/lib/munge /run/munge -R
+          sudo chown munge:munge /etc/munge/ /var/log/munge /var/lib/munge /run/munge -R
           sudo ls -la /etc/munge
           echo ""
           sudo systemctl restart munge || true
