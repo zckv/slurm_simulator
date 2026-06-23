@@ -39,7 +39,11 @@ jobs:
         run: |
           sudo cp tests/slurm.conf /etc/slurm/
           sudo ls -la /etc/slurm
-          docker exec slurm-sim sinfo -V
-          docker exec slurm-sim sinfo -v
-          sinfo -V
+          echo "docker version: $(docker exec slurm-sim sinfo -V)"
+          echo "local  version: $(sinfo -V)"
+          echo "versions must have least than 2 years between them"
           sinfo -v
+          echo "docker runner hostname $(srun hostname)"
+          sinfo -v
+          sacct
+          
