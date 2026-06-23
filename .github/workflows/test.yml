@@ -34,6 +34,7 @@ jobs:
           echo ""
           sudo chmod 400 /etc/munge/munge.key          
           sudo chown munge:munge /etc/munge/munge.key
+          sudo chown root:root /var/log/munge -R
           sudo munged -vv
       # TODO: add an slurm setup action ? 
       - name: Light test
