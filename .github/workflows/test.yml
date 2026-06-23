@@ -21,6 +21,7 @@ jobs:
         run: |
           docker pull ghcr.io/zckv/slurm-small-sim:${{ inputs.image_version }}
           docker run -d -p 6817:6817 -p 6818:6818 -p 6819:6819 \
+            --name slurm-sim
             -e MUNGE_KEY_BASE64="${{ secrets.MUNGE_KEY_BASE64 }}" \
             ghcr.io/zckv/slurm-small-sim:${{ inputs.image_version }}
       - name: Setup Munge
@@ -38,4 +39,7 @@ jobs:
         run: |
           sudo cp tests/slurm.conf /etc/slurm/
           sudo ls -la /etc/slurm
-          sinfo
+          docker exec slurm-sim sinfo -V
+          docker exec slurm-sim sinfo -v
+          sinfo -V
+          sinfo -v
