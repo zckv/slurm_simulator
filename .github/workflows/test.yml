@@ -34,7 +34,7 @@ jobs:
           sudo chown root:root /etc/munge/ /var/log/munge /var/lib/munge /run/munge -R
           sudo ls -la /etc/munge
           echo ""
-          sudo systemctl stop munge || true
+          sudo systemctl restart munge || true
           sleep 3
           sudo systemctl status munge
       # TODO: add an slurm setup action ? 
