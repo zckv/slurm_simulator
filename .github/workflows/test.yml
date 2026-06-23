@@ -21,7 +21,7 @@ jobs:
         run: |
           docker pull ghcr.io/zckv/slurm-small-sim:${{ inputs.image_version }}
           docker run -d -p 6817:6817 -p 6818:6818 -p 6819:6819 \
-            -e MUNGE_KEY_BASE64:${{ secrets.MUNGE_KEY_BASE64 }} \
+            -e MUNGE_KEY_BASE64="${{ secrets.MUNGE_KEY_BASE64 }}" \
             ghcr.io/zckv/slurm-small-sim:${{ inputs.image_version }}
       - name: Setup Munge
         run: |
