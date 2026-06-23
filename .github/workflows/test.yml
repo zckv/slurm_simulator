@@ -1,0 +1,36 @@
+---
+name: Test Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_version:
+        description: Image version to pull
+        default: latest
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install slurm-client
+        run: |
+          sudo apt-get update && sudo apt-get install -y slurm-client munge
+      - name: Pull and run Slurm image
+        run: |
+          docker pull ghcr.io/zckv/slurm-small-sim:${{ inputs.image_version }}
+          docker run -d -p 6817:6817 -p 6818:6818 -p 6819:6819 \
+            -e MUNGE_KEY_BASE64:${{ secrets.MUNGE_KEY_BASE64 }} \
+            ghcr.io/zckv/slurm-small-sim:${{ inputs.image_version }}
+      - name: Setup Munge
+        run: |
+          mkdir -p /etc/munge
+          sudo base64 -d tests/munge.key.base64 > /etc/munge/munge.key
+          sudo chmod 400 /etc/munge/munge.key          
+          sudo chown munge: /etc/munge/munge.key
+          munged -vv
+      # TODO: add an slurm setup action ? 
+      - name: Light test
+        run: sinfo
