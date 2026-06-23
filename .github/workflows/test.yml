@@ -34,7 +34,9 @@ jobs:
           sudo chown root:root /etc/munge/ /var/log/munge /var/lib/munge /run/munge -R
           sudo ls -la /etc/munge
           echo ""
-          sudo munged -vv
+          sudo systemctl stop munge || true
+          sleep 3
+          sudo systemctl status munge
       # TODO: add an slurm setup action ? 
       - name: Light test
         run: sinfo
