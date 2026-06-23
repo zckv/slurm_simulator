@@ -27,16 +27,15 @@ jobs:
         run: |
           mkdir -p /etc/munge
           base64 -d tests/munge.key.base64 > munge.key
-          sudo ls -la /etc/munge
-          echo ""
           sudo cp munge.key /etc/munge/munge.key
           sudo chmod 400 /etc/munge/munge.key          
           sudo chown munge:munge /etc/munge/ /var/log/munge /var/lib/munge /run/munge -R
-          sudo ls -la /etc/munge
-          echo ""
           sudo systemctl restart munge || true
-          sleep 3
+          sleep 1
           sudo systemctl status munge
       # TODO: add an slurm setup action ? 
       - name: Light test
-        run: sinfo
+        run: |
+          sudo cp tests/slurm.conf /etc/slurm/
+          sudo ls -la /etc/slurm
+          sinfo
