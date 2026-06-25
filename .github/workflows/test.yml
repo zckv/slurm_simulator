@@ -42,6 +42,13 @@ jobs:
           echo "docker version: $(docker exec slurm-sim sinfo -V)"
           echo "local  version: $(sinfo -V)"
           echo "versions are compatible with the previous three major releases"
+          echo ""
+          echo "from container"
+          echo ""
+          docker exec slurm-sim sinfo -v
+          echo ""
+          echo "from localhost"
+          echo ""
           sinfo -v
           echo "docker runner hostname $(srun hostname)"
           sinfo -v
