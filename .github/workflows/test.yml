@@ -42,6 +42,7 @@ jobs:
           echo "docker version: $(docker exec slurm-sim sinfo -V)"
           echo "local  version: $(sinfo -V)"
           echo "versions are compatible with the previous three major releases"
+          sleep 5
             
           echo ""
           echo "Slurmctld logs:"
