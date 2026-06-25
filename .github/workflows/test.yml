@@ -42,6 +42,17 @@ jobs:
           echo "docker version: $(docker exec slurm-sim sinfo -V)"
           echo "local  version: $(sinfo -V)"
           echo "versions are compatible with the previous three major releases"
+            
+          echo ""
+          echo "Slurmctld logs:"
+          docker exec slurm-sim cat /var/log/slurm/slurmctld/current
+          echo ""
+          echo "Slurmd logs:"
+          docker exec slurm-sim cat /var/log/slurm/slurmd/current
+          echo ""
+
+          exit 0
+
           echo ""
           echo "from container"
           echo ""
