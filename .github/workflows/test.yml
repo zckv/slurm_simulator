@@ -41,18 +41,15 @@ jobs:
           sudo ls -la /etc/slurm
           echo "docker version: $(docker exec slurm-sim sinfo -V)"
           echo "local  version: $(sinfo -V)"
-          echo "versions are compatible with the previous three major releases"
           sleep 5
+          set -x
             
+          sinfo
           echo ""
-          echo "from container"
+          docker exec slurm-sim tail /var/log/slurm/slurmctld/current
           echo ""
-          docker exec slurm-sim sinfo -v
+          docker exec slurm-sim tail /var/log/slurm/slurmd/current
           echo ""
-          echo "from localhost"
-          echo ""
-          sinfo -v
-          echo "docker runner hostname $(srun hostname)"
-          sinfo -v
-          sacct
+          docker exec slurm-sim tail /var/log/slurm/slurmdbd/current
+          # echo "docker runner hostname $(srun hostname)"
           
