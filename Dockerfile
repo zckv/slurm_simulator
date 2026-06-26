@@ -6,6 +6,8 @@ ARG SLURM_VERSION=25.05.8
 RUN dnf install -y dnf-plugins-core && \
     dnf config-manager --set-enabled crb && \
     dnf -y install autoconf automake bash-completion mariadb-server mariadb-devel munge munge-devel pam-devel perl perl-devel readline-devel rpmdevtools tar wget xz
+
+COPY .rpmmacros /root/.rpmmacros
  
 RUN mkdir /tmp/slurm && cd /tmp/slurm && \
     wget "https://github.com/SchedMD/slurm/releases/download/slurm-${SLURM_VERSION//./-}-1/slurm-${SLURM_VERSION}.tar.bz2" && \

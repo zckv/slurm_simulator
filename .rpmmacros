@@ -1,0 +1,5 @@
+# Check slurm spec for flags to activate
+# Here I was trying to add cgroup/v2 support
+# %_enable_debug     "--with-debug"
+# %_with_cgroupv2    1
+# %_with_hwloc       1
