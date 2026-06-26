@@ -45,16 +45,6 @@ jobs:
           sleep 5
             
           echo ""
-          echo "Slurmctld logs:"
-          docker exec slurm-sim cat /var/log/slurm/slurmctld/current
-          echo ""
-          echo "Slurmd logs:"
-          docker exec slurm-sim cat /var/log/slurm/slurmd/current
-          echo ""
-
-          exit 0
-
-          echo ""
           echo "from container"
           echo ""
           docker exec slurm-sim sinfo -v
