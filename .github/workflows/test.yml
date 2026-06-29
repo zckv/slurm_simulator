@@ -46,6 +46,11 @@ jobs:
             
           sinfo
           echo ""
+          sleep 1
+          srun echo coucou
+          echo ""
+          sleep 1
+          sacct
           docker exec slurm-sim tail /var/log/slurm/slurmctld/current
           echo ""
           docker exec slurm-sim tail /var/log/slurm/slurmd/current
