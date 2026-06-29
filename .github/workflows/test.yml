@@ -48,6 +48,7 @@ jobs:
           echo ""
           sleep 1
           srun echo coucou || echo srun failed
+          echo "docker runner hostname $(srun hostname)" || echo srun from docker failed
           echo ""
           sleep 1
           sacct || echo sacct failed
@@ -56,5 +57,7 @@ jobs:
           docker exec slurm-sim tail /var/log/slurm/slurmd/current
           echo ""
           docker exec slurm-sim tail /var/log/slurm/slurmdbd/current
+          echo ""
+          docker exec slurm-sim tail /var/log/munge/current
           # echo "docker runner hostname $(srun hostname)"
           
