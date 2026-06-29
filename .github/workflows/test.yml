@@ -47,10 +47,10 @@ jobs:
           sinfo
           echo ""
           sleep 1
-          srun echo coucou
+          srun echo coucou || echo srun failed
           echo ""
           sleep 1
-          sacct
+          sacct || echo sacct failed
           docker exec slurm-sim tail /var/log/slurm/slurmctld/current
           echo ""
           docker exec slurm-sim tail /var/log/slurm/slurmd/current
