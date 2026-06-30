@@ -1,0 +1,66 @@
+---
+name: Test Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_version:
+        description: Image version to pull
+        default: latest
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install slurm-client
+        run: |
+          sudo apt-get update && sudo apt-get install -y slurm-client munge
+      - name: Pull and run Slurm image
+        run: |
+          docker pull ghcr.io/zckv/slurm-small-sim:${{ inputs.image_version }}
+          docker run -d -p 6817:6817 -p 6818:6818 -p 6819:6819 \
+            --name slurm-sim \
+            -e MUNGE_KEY_BASE64="${{ secrets.MUNGE_KEY_BASE64 }}" \
+            ghcr.io/zckv/slurm-small-sim:${{ inputs.image_version }}
+      - name: Setup Munge
+        run: |
+          mkdir -p /etc/munge
+          base64 -d tests/munge.key.base64 > munge.key
+          sudo cp munge.key /etc/munge/munge.key
+          sudo chmod 400 /etc/munge/munge.key          
+          sudo chown munge:munge /etc/munge/ /var/log/munge /var/lib/munge /run/munge -R
+          sudo systemctl restart munge || true
+          sleep 1
+          sudo systemctl status munge
+      # TODO: add an slurm setup action ? 
+      - name: Light test
+        run: |
+          sudo cp tests/slurm.conf /etc/slurm/
+          # sudo ls -la /etc/slurm
+          echo "docker version: $(docker exec slurm-sim sinfo -V)"
+          echo "local  version: $(sinfo -V)"
+          sudo sha256sum /etc/munge/munge.key
+          docker exec slurm-sim sha256sum /etc/munge/munge.key
+          docker exec slurm-sim groupadd -g 1001 runner
+          docker exec slurm-sim useradd -u 1001 -g 1001 runner
+            
+          sleep 5
+          set -x
+            
+          sinfo 
+          echo ""
+          sleep 1
+          srun -v echo coucou || echo srun failed
+          echo ""
+          sleep 1
+          sacct -vvv || echo sacct failed
+          docker exec slurm-sim sacct -vvv || echo sacct from docker failed
+          docker exec slurm-sim tail /var/log/slurm/slurmctld/current
+          echo ""
+          docker exec slurm-sim tail /var/log/slurm/slurmd/current
+          echo ""
+          docker exec slurm-sim tail /var/log/slurm/slurmdbd/current
+          echo ""
+          docker exec slurm-sim tail /var/log/munge/current
