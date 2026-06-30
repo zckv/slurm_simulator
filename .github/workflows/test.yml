@@ -38,6 +38,7 @@ jobs:
       - name: Light test
         run: |
           sudo cp tests/slurm.conf /etc/slurm/
+          sudo cp tests/slurmdbd.conf /etc/slurm/
           # sudo ls -la /etc/slurm
           echo "docker version: $(docker exec slurm-sim sinfo -V)"
           echo "local  version: $(sinfo -V)"
