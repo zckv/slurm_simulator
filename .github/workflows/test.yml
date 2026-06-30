@@ -52,6 +52,7 @@ jobs:
           echo ""
           sleep 1
           sacct || echo sacct failed
+          docker exec slurm-sim sacct || echo sacct from docker failed
           docker exec slurm-sim tail /var/log/slurm/slurmctld/current
           echo ""
           docker exec slurm-sim tail /var/log/slurm/slurmd/current
@@ -60,4 +61,6 @@ jobs:
           echo ""
           docker exec slurm-sim tail /var/log/munge/current
           # echo "docker runner hostname $(srun hostname)"
+          # FIXME: seems like munge is having problems for host - container communication
+          sudo systemctl status munge
           
