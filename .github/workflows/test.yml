@@ -49,8 +49,8 @@ jobs:
           sinfo
           echo ""
           sleep 1
-          srun echo coucou || echo srun failed
-          docker exec slurm-sim srun hostname || echo srun from docker failed
+          srun -vvv echo coucou || echo srun failed
+          docker exec -vvv slurm-sim srun hostname || echo srun from docker failed
           echo ""
           sleep 1
           sacct || echo sacct failed
