@@ -41,6 +41,8 @@ jobs:
           sudo ls -la /etc/slurm
           echo "docker version: $(docker exec slurm-sim sinfo -V)"
           echo "local  version: $(sinfo -V)"
+          sudo sha256sum /etc/munge/munge.key
+          sudo docker exec slurm-sim sha256sum /etc/munge/munge.key
           sleep 5
           set -x
             
